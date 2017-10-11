@@ -1,29 +1,34 @@
 
 * {Stream}
 
-The `process.stdout` property returns a [Writable][] stream equivalent to or
-associated with `stdout` (fd `1`).
+`process.stdout` 属性返回连接到 `stdout` (fd `1`)的流。 
+它是一个[`net.Socket`][] (它是一个[Duplex][]流)， 除非 fd `1` 指向一个文件，在这种情况下它是一个[可写][]流。
 
-For example:
+例1： 将输入流数据输出到输出流，即输出到终端。
 
 ```js
-console.log = (msg) => {
-  process.stdout.write(`${msg}\n`);
-};
+process.stdin.pipe(process.stdout);
+```
+例2： 要求用户输入两个数值，然后把和输出到终端。
+
+```js
+/*1:声明变量*/
+var num1, num2;
+/*2：向屏幕输出，提示信息，要求输入num1*/
+process.stdout.write('请输入num1的值：');
+/*3：监听用户的输入*/
+process.stdin.on('data', function (chunk) {
+    if (!num1) {
+        num1 = Number(chunk);
+        /*4：向屏幕输出，提示信息，要求输入num2*/
+        process.stdout.write('请输入num2的值');
+    } else {
+        num2 = Number(chunk);
+        process.stdout.write('结果是：' + (num1 + num2));
+    }
+});
 ```
 
-Note: `process.stderr` and `process.stdout` differ from other Node.js streams
-in several ways:
-1. They cannot be closed ([`end()`][] will throw).
-2. They never emit the [`'finish'`][] event.
-3. Writes _can_ block when output is redirected to a file.
-  - Note that disks are fast and operating systems normally employ write-back
-    caching so this is very uncommon.
-4. Writes on UNIX **will** block by default if output is going to a TTY
-   (a terminal).
-5. Windows functionality differs. Writes block except when output is going to a
-   TTY.
-
-To check if Node.js is being run in a TTY context, read the `isTTY` property
-on `process.stderr`, `process.stdout`, or `process.stdin`:
+注意:  重要的是`process.stdout`不同于 Node.js 的其他流,
+详情可以参考[note on process I/O][] .
 

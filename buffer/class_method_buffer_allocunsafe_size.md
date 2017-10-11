@@ -1,12 +1,16 @@
 <!-- YAML
 added: v5.10.0
+changes:
+  - version: v7.0.0
+    pr-url: https://github.com/nodejs/node/pull/7079
+    description: Passing a negative `size` will now throw an error.
 -->
 
-* `size` {Integer} 新建的 `Buffer` 期望的长度
+* `size` {integer} 新建的 `Buffer` 期望的长度
 
-分配一个大小为 `size` 字节的新建的**没有用0填充**的 `Buffer` 。
-`size` 必须小于或等于 [`buffer.kMaxLength`] 的值，否则将抛出 [`RangeError`] 错误。
-如果 `size` 小于或等于0，则创建一个长度为0的 `Buffer` 。
+分配一个大小为 `size` 字节的新建的 `Buffer` 。
+如果 `size` 大于 [`buffer.constants.MAX_LENGTH`] 或小于 0，则抛出 [`RangeError`] 错误。
+如果 `size` 为 0，则创建一个长度为 0 的 `Buffer`。
 
 以这种方式创建的 `Buffer` 实例的底层内存是**未初始化**的。
 新创建的 `Buffer` 的内容是未知的，且**可能包含敏感数据**。
@@ -15,14 +19,14 @@ added: v5.10.0
 例子：
 
 ```js
-const buf = Buffer.allocUnsafe(5);
+const buf = Buffer.allocUnsafe(10);
 
-// 输出: (内容可能不同): <Buffer 78 e0 82 02 01>
+// 输出: (内容可能不同): <Buffer a0 8b 28 3f 01 00 00 00 50 32>
 console.log(buf);
 
 buf.fill(0);
 
-// 输出: <Buffer 00 00 00 00 00>
+// 输出: <Buffer 00 00 00 00 00 00 00 00 00 00>
 console.log(buf);
 ```
 

@@ -2,8 +2,7 @@
 added: v0.1.98
 -->
 
-* `prompt` {String}
+* `prompt` {string}
 
-The `rl.setPrompt()` method sets the prompt that will be written to `output`
-whenever `rl.prompt()` is called.
+`rl.setPrompt()` 方法用于设置每当 `rl.prompt()` 被调用时要被写入到 `output` 的提示。
 

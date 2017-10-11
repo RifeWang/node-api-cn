@@ -16,5 +16,6 @@ written, but the buffer may contain strings, and the strings are lazily
 encoded, so the exact number of bytes is not known.)
 
 Users who experience large or growing `bufferSize` should attempt to
-"throttle" the data flows in their program with [`pause()`][] and [`resume()`][].
+"throttle" the data flows in their program with
+[`socket.pause()`][] and [`socket.resume()`][].
 

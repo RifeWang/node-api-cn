@@ -2,11 +2,21 @@
 added: v0.1.90
 -->
 
-A factory function, which returns a new [`net.Socket`][] and automatically
-connects to the supplied `port` and `host`.
+* `port` {number} Port the socket should connect to. Will be passed to
+  [`socket.connect(port[, host][, connectListener])`][`socket.connect(port, host)`].
+* `host` {string} Host the socket should connect to. Defaults to `'localhost'`.
+  Will be passed to
+  [`socket.connect(port[, host][, connectListener])`][`socket.connect(port, host)`].
+* `connectListener` {Function} Common parameter of the
+  [`net.createConnection()`][] functions, an "once" listener for the
+  `'connect'` event on the initiating socket. Will be passed to
+  [`socket.connect(path[, connectListener])`][`socket.connect(port, host)`].
+* Returns: {net.Socket} The newly created socket used to start the connection.
 
-If `host` is omitted, `'localhost'` will be assumed.
+Initiates a TCP connection.
 
-The `connectListener` parameter will be added as a listener for the
-[`'connect'`][] event once.
+This function creates a new [`net.Socket`][] with all options set to default,
+immediately initiates connection with
+[`socket.connect(port[, host][, connectListener])`][`socket.connect(port, host)`],
+then returns the `net.Socket` that starts the connection.
 

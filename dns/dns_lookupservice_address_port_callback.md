@@ -1,18 +1,18 @@
 <!-- YAML
 added: v0.11.14
 -->
+- `address` {string}
+- `port` {number}
+- `callback` {Function}
+  - `err` {Error}
+  - `hostname` {string} e.g. `example.com`
+  - `service` {string} e.g. `http`
 
-Resolves the given `address` and `port` into a hostname and service using
-the operating system's underlying `getnameinfo` implementation.
+将参数`address`和`port`传入操作系统底层`getnameinfo`服务来解析处理并返回主机名。
 
-If `address` is not a valid IP address, a `TypeError` will be thrown.
-The `port` will be coerced to a number. If it is not a legal port, a `TypeError`
-will be thrown.
+如果`address`不是有效的IP地址，会抛出`TypeError`。`port`必须是一个整数.如果不是规定的端口号，会抛出`TypeError`.
 
-The callback has arguments `(err, hostname, service)`. The `hostname` and
-`service` arguments are strings (e.g. `'localhost'` and `'http'` respectively).
-
-On error, `err` is an [`Error`][] object, where `err.code` is the error code.
+出错情况下，`err`是一个`Error`对象，`err.code`代码错误码。
 
 ```js
 const dns = require('dns');
@@ -21,4 +21,6 @@ dns.lookupService('127.0.0.1', 22, (err, hostname, service) => {
   // Prints: localhost ssh
 });
 ```
+
+如果以 [`util.promisify()`][] 方式进行调用, 它将返回一个包含`hostname`和`service`属性的 Promise 对象。
 

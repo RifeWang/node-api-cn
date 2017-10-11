@@ -1,13 +1,16 @@
 
+* `targetObject` {Object}
+* `constructorOpt` {Function}
+
 在 `targetObject` 上创建一个 `.stack` 属性，当访问时返回一个表示代码中调用 `Error.captureStackTrace()` 的位置的字符串。
 
 ```js
 const myObject = {};
 Error.captureStackTrace(myObject);
-myObject.stack  // 类似 `new Error().stack`
+myObject.stack;  // 类似 `new Error().stack`
 ```
 
-跟踪的第一行，不是前缀为 `ErrorType: message`，而是调用 `targetObject.toString()` 的结果。
+The first line of the trace will be prefixed with `${myObject.name}: ${myObject.message}`.
 
 可选的 `constructorOpt` 参数接受一个函数。
 如果提供了，则 `constructorOpt` 之上包括自身在内的全部栈帧都会被生成的堆栈跟踪省略。
@@ -21,7 +24,7 @@ function MyError() {
 }
 
 // 没传入 MyError 到 captureStackTrace，MyError 帧会显示在 .stack 属性。
-// 通过传入构造函数，可以省略该帧及其之上的所有帧。
-new MyError().stack
+// 通过传入构造函数，可以省略该帧，且保留其下面的所有帧。
+new MyError().stack;
 ```
 

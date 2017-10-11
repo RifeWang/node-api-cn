@@ -1,12 +1,10 @@
 <!-- YAML
 added: v0.3.4
 -->
+- `options` {Object} 接受来自 [`tls.createServer()`][] 和 [`tls.createSecureContext()`][] 的 `options` .
+- `requestListener` {Function} 添加到 `request` 事件的监听器.
 
-Returns a new HTTPS web server object. The `options` is similar to
-[`tls.createServer()`][].  The `requestListener` is a function which is
-automatically added to the `'request'` event.
-
-Example:
+例子:
 
 ```js
 // curl -k https://localhost:8000/
@@ -24,14 +22,15 @@ https.createServer(options, (req, res) => {
 }).listen(8000);
 ```
 
-Or
+或者
 
 ```js
 const https = require('https');
 const fs = require('fs');
 
 const options = {
-  pfx: fs.readFileSync('server.pfx')
+  pfx: fs.readFileSync('test/fixtures/test_cert.pfx'),
+  passphrase: 'sample'
 };
 
 https.createServer(options, (req, res) => {

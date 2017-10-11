@@ -5,13 +5,13 @@ added: v0.7.0
 * `message` {Object}
 * `handle` {undefined|Object}
 
-Similar to the `cluster.on('message')` event, but specific to this worker. In a
-worker you can also use `process.on('message')`.
+和`cluster.on('message')`事件类似，但针对特定的工作进程。
 
-See [`process` event: `'message'`][].
+在工作进程内，可以使用`process.on('message')`
 
-As an example, here is a cluster that keeps count of the number of requests
-in the master process using the message system:
+详见 [`process` event: `'message'`][].
+
+在下面这个例子中，我们使用message机制来实现主进程统计cluster中请求数量的功能。
 
 ```js
 const cluster = require('cluster');
@@ -19,20 +19,20 @@ const http = require('http');
 
 if (cluster.isMaster) {
 
-  // Keep track of http requests
+  // 跟踪 http 请求
   let numReqs = 0;
   setInterval(() => {
     console.log(`numReqs = ${numReqs}`);
   }, 1000);
 
-  // Count requests
+  // 计算请求数目
   function messageHandler(msg) {
     if (msg.cmd && msg.cmd === 'notifyRequest') {
       numReqs += 1;
     }
   }
 
-  // Start workers and listen for messages containing notifyRequest
+  // 启动 worker 并监听包含 notifyRequest 的消息
   const numCPUs = require('os').cpus().length;
   for (let i = 0; i < numCPUs; i++) {
     cluster.fork();
@@ -44,14 +44,13 @@ if (cluster.isMaster) {
 
 } else {
 
-  // Worker processes have a http server.
+  // Worker 进程有一个http服务器
   http.Server((req, res) => {
     res.writeHead(200);
     res.end('hello world\n');
 
-    // notify master about the request
+    // 通知 master 进程接收到了请求
     process.send({ cmd: 'notifyRequest' });
   }).listen(8000);
 }
 ```
-

@@ -11,7 +11,7 @@ added: v0.7.10
 详见 setsid(2)。
 
 默认情况下，父进程会等待被分离的子进程退出。
-为了防止父进程等待给定的 `child`，可以使用 `child.unref()` 方法。
+为了防止父进程等待给定的 `subprocess`，可以使用 `subprocess.unref()` 方法。
 这样做会导致父进程的事件循环不包含子进程的引用计数，使得父进程独立于子进程退出，除非子进程和父进程之间建立了一个 IPC 信道。
 
 当使用 `detached` 选项来启动一个长期运行的进程时，该进程不会在父进程退出后保持在后台运行，除非提供了一个不连接到父进程的 `stdio` 配置。
@@ -20,29 +20,29 @@ added: v0.7.10
 例子，一个长期运行的进程，为了忽视父进程的终止，通过分离且忽视其父进程的 `stdio` 文件描述符来实现：
 
 ```js
-const spawn = require('child_process').spawn;
+const { spawn } = require('child_process');
 
-const child = spawn(process.argv[0], ['child_program.js'], {
+const subprocess = spawn(process.argv[0], ['child_program.js'], {
   detached: true,
   stdio: 'ignore'
 });
 
-child.unref();
+subprocess.unref();
 ```
 
 也可以将子进程的输出重定向到文件：
 
 ```js
 const fs = require('fs');
-const spawn = require('child_process').spawn;
+const { spawn } = require('child_process');
 const out = fs.openSync('./out.log', 'a');
 const err = fs.openSync('./out.log', 'a');
 
-const child = spawn('prg', [], {
+const subprocess = spawn('prg', [], {
   detached: true,
   stdio: [ 'ignore', out, err ]
 });
 
-child.unref();
+subprocess.unref();
 ```
 

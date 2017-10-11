@@ -1,11 +1,12 @@
 <!-- YAML
 added: v0.9.12
 -->
+- `hostname` {string}
+- `callback` {Function}
+  - `err` {Error}
+  - `addresses` {Object[]}
 
-Uses the DNS protocol to resolve regular expression based records (`NAPTR`
-records) for the `hostname`. The `callback` function has arguments
-`(err, addresses)`.  The `addresses` argument passed to the `callback` function
-will contain an array of objects with the following properties:
+使用DNS协议来处理基于正则表达式匹配的记录(`NAPTR`记录)的主机名。`adresses`参数是传递给`callback`函数的主机名对象数组，对象包含属性：
 
 * `flags`
 * `service`
@@ -14,8 +15,9 @@ will contain an array of objects with the following properties:
 * `order`
 * `preference`
 
-For example:
+例如：
 
+<!-- eslint-skip -->
 ```js
 {
   flags: 's',

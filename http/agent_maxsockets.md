@@ -2,9 +2,9 @@
 added: v0.3.6
 -->
 
-* {Number}
+* {number}
 
-默认设为无穷大。
-决定每个来源中代理可打开多少个并发的 socket。
-来源是一个 `'host:port'` 或 `'host:port:localAddress'` 组合。
+默认为不限制。
+该属性可设置代理为每个来源打开的并发 socket 的最大数量。
+来源是 [`agent.getName()`] 的返回值。
 

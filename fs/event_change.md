@@ -2,8 +2,8 @@
 added: v0.5.8
 -->
 
-* `eventType` {String} fs 变化的类型
-* `filename` {String | Buffer} 变化的文件名（如果是相关的/可用的）
+* `eventType` {string} fs 变化的类型
+* `filename` {string|Buffer} 变化的文件名（如果是相关的/可用的）
 
 当一个被监视的目录或文件有变化时触发。
 详见 [`fs.watch()`]。
@@ -13,10 +13,11 @@ added: v0.5.8
 
 ```js
 // 例子，处理 fs.watch 监听器
-fs.watch('./tmp', {encoding: 'buffer'}, (eventType, filename) => {
-  if (filename)
+fs.watch('./tmp', { encoding: 'buffer' }, (eventType, filename) => {
+  if (filename) {
     console.log(filename);
     // 输出: <Buffer ...>
+  }
 });
 ```
 

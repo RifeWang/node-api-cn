@@ -2,8 +2,7 @@
 added: v0.3.3
 -->
 
-* Returns: {Integer}
+* Returns: {integer}
 
-The `os.totalmem()` method returns the total amount of system memory in bytes
-as an integer.
+`os.totalmem()`方法以整数的形式返回所有系统内存的字节数.
 

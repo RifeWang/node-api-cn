@@ -11,23 +11,22 @@ to the `http` module passed to it. For instance:
 'use strict';
 const vm = require('vm');
 
-let code =
-`(function(require) {
+const code = `
+(function(require) {
+  const http = require('http');
 
-   const http = require('http');
+  http.createServer((request, response) => {
+    response.writeHead(200, { 'Content-Type': 'text/plain' });
+    response.end('Hello World\\n');
+  }).listen(8124);
 
-   http.createServer( (request, response) => {
-     response.writeHead(200, {'Content-Type': 'text/plain'});
-     response.end('Hello World\\n');
-   }).listen(8124);
+  console.log('Server running at http://127.0.0.1:8124/');
+})`;
 
-   console.log('Server running at http://127.0.0.1:8124/');
- })`;
-
- vm.runInThisContext(code)(require);
+vm.runInThisContext(code)(require);
  ```
 
-*Note*: The `require()` in the above case shares the state with context it is
-passed from. This may introduce risks when untrusted code is executed, e.g.
-altering objects from the calling thread's context in unwanted ways.
+*Note*: The `require()` in the above case shares the state with the context it
+is passed from. This may introduce risks when untrusted code is executed, e.g.
+altering objects in the context in unwanted ways.
 

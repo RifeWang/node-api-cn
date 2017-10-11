@@ -1,10 +1,15 @@
 <!-- YAML
 added: v0.0.2
+changes:
+  - version: v7.6.0
+    pr-url: https://github.com/nodejs/node/pull/10739
+    description: The `path` parameter can be a WHATWG `URL` object using `file:`
+                 protocol. Support is currently still *experimental*.
 -->
 
-* `path` {String | Buffer}
-* `flags` {String | Number}
-* `mode` {Integer}
+* `path` {string|Buffer|URL}
+* `flags` {string|number}
+* `mode` {integer} **Default:** `0o666`
 * `callback` {Function}
 
 异步地打开文件。详见 open(2)。
@@ -38,7 +43,7 @@ added: v0.0.2
 
 * `'ax+'` - 类似于 `'a+'`，但如果 `path` 存在，则失败。
 
-`mode` 可设置文件模式（权限和 sticky 位），但只有当文件被创建时才有效。默认为 `0666`，可读写。
+`mode` 可设置文件模式（权限和 sticky 位），但只有当文件被创建时才有效。默认为 `0o666`，可读写。
 
 该回调有两个参数 `(err, fd)`。
 
@@ -54,11 +59,11 @@ added: v0.0.2
 内核会忽略位置参数，并总是附加数据到文件的末尾。
 
 注意：`fs.open()` 某些标志的行为是与平台相关的。
-因此，在 OS X 和 Linux 下用 `'a+'` 标志打开一个目录（见下面的例子），会返回一个错误。
+因此，在 macOS 和 Linux 下用 `'a+'` 标志打开一个目录（见下面的例子），会返回一个错误。
 与此相反，在 Windows 和 FreeBSD，则会返回一个文件描述符。
 
 ```js
-// OS X 与 Linux
+// macOS 与 Linux
 fs.open('<directory>', 'a+', (err, fd) => {
   // => [Error: EISDIR: illegal operation on a directory, open <directory>]
 });
@@ -68,4 +73,9 @@ fs.open('<directory>', 'a+', (err, fd) => {
   // => null, <fd>
 });
 ```
+
+有些字符 (`< > : " / \ | ? *`) 在Windows下保留，通过[命名文件、路径和命名空间][]来记录。 在NTFS下，如果文件名包含冒号，Node.js 将打开一个文件系统流， 具体描述在 [MSDN页][MSDN-Using-Streams]。
+
+许多函数也是基于 `fs.open()` 拥有这样的效果。例:
+`fs.writeFile()`, `fs.readFile()`, 等。
 

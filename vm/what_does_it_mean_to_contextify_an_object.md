@@ -9,20 +9,20 @@ According to the [V8 Embedder's Guide][]:
 When the method `vm.createContext()` is called, the `sandbox` object that is
 passed in (or a newly created object if `sandbox` is `undefined`) is associated
 internally with a new instance of a V8 Context. This V8 Context provides the
-`code` run using the `vm` modules methods with an isolated global environment
+`code` run using the `vm` module's methods with an isolated global environment
 within which it can operate. The process of creating the V8 Context and
 associating it with the `sandbox` object is what this document refers to as
 "contextifying" the `sandbox`.
 
-[indirect `eval()` call]: https://es5.github.io/#x10.4.2
-[global object]: https://es5.github.io/#x15.1
 [`Error`]: errors.html#errors_class_error
+[`eval()`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval
 [`script.runInContext()`]: #vm_script_runincontext_contextifiedsandbox_options
 [`script.runInThisContext()`]: #vm_script_runinthiscontext_options
 [`vm.createContext()`]: #vm_vm_createcontext_sandbox
 [`vm.runInContext()`]: #vm_vm_runincontext_code_contextifiedsandbox_options
 [`vm.runInThisContext()`]: #vm_vm_runinthiscontext_code_options
-[`eval()`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval
-[V8 Embedder's Guide]: https://developers.google.com/v8/embed#contexts
-[contextified]: #vm_what_does_it_mean_to_contextify_an_object
+[V8 Embedder's Guide]: https://github.com/v8/v8/wiki/Embedder's%20Guide#contexts
 [command line option]: cli.html
+[contextified]: #vm_what_does_it_mean_to_contextify_an_object
+[global object]: https://es5.github.io/#x15.1
+[indirect `eval()` call]: https://es5.github.io/#x10.4.2

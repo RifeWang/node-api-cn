@@ -2,8 +2,8 @@
 added: v0.11.7
 -->
 
-* {Number}
+* {number}
 
-默认设为 256。
-对于支持 HTTP KeepAlive 的 Agent，它设置了在空闲状态下可打开的 socket 的最大数量。
+默认为 256。
+对于已启用 `keepAlive` 的代理，该属性可设置要保留的空闲 socket 的最大数量。
 

@@ -1,13 +1,12 @@
 <!-- YAML
 added: v0.1.16
 -->
+- `ip` {string}
+- `callback` {Function}
+  - `err` {Error}
+  - `hostnames` {string[]}
 
-Performs a reverse DNS query that resolves an IPv4 or IPv6 address to an
-array of hostnames.
+执行一个反向DNS查询返回IPv4或IPv6地址的主机名的数组。
 
-The `callback` function has arguments `(err, hostnames)`, where `hostnames`
-is an array of resolved hostnames for the given `ip`.
-
-On error, `err` is an [`Error`][] object, where `err.code` is
-one of the [DNS error codes][].
+出错情况下，`err`是一个`Error`对象，`err.code`代码错误码。错误码列表：[here](https://nodejs.org/dist/latest-v8.x/docs/api/dns.html#dns_error_codes).
 

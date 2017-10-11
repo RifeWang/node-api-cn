@@ -2,9 +2,9 @@
 added: v0.1.15
 -->
 
-* {Integer}
+* {integer}
 
-The `process.pid` property returns the PID of the process.
+`process.pid`属性返回进程的PID。
 
 ```js
 console.log(`This process is pid ${process.pid}`);

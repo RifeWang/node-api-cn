@@ -1,21 +1,8 @@
 
 * {Stream}
 
-The `process.stderr` property returns a [Writable][] stream equivalent to or
-associated with `stderr` (fd `2`).
+`process.stderr` 属性返回连接到`stderr`(fd `2`)的流。 
+它是一个[`net.Socket`][](它是一个[Duplex][]流)，除非 fd `2`指向一个文件，在这种情况下它是一个[可写][]流。
 
-Note: `process.stderr` and `process.stdout` differ from other Node.js streams
-in several ways:
-1. They cannot be closed ([`end()`][] will throw).
-2. They never emit the [`'finish'`][] event.
-3. Writes _can_ block when output is redirected to a file.
-  - Note that disks are fast and operating systems normally employ write-back
-    caching so this is very uncommon.
-4. Writes on UNIX **will** block by default if output is going to a TTY
-   (a terminal).
-5. Windows functionality differs. Writes block except when output is going to a
-   TTY.
-
-To check if Node.js is being run in a TTY context, read the `isTTY` property
-on `process.stderr`, `process.stdout`, or `process.stdin`:
+*注意*: `process.stderr` 与其他 Node.js 流有重要的区别，详见 [note on process I/O][]。
 

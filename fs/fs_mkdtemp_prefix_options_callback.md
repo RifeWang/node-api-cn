@@ -1,10 +1,18 @@
 <!-- YAML
 added: v5.10.0
+changes:
+  - version: v7.0.0
+    pr-url: https://github.com/nodejs/node/pull/7897
+    description: The `callback` parameter is no longer optional. Not passing
+                 it will emit a deprecation warning.
+  - version: v6.2.1
+    pr-url: https://github.com/nodejs/node/pull/6828
+    description: The `callback` parameter is optional now.
 -->
 
-* `prefix` {String}
-* `options` {String | Object}
-  * `encoding` {String} 默认 = `'utf8'`
+* `prefix` {string}
+* `options` {string|Object}
+  * `encoding` {string} 默认 = `'utf8'`
 * `callback` {Function}
 
 创建一个唯一的临时目录。
@@ -18,10 +26,10 @@ added: v5.10.0
 例子：
 
 ```js
-fs.mkdtemp('/tmp/foo-', (err, folder) => {
+fs.mkdtemp(path.join(os.tmpdir(), 'foo-'), (err, folder) => {
   if (err) throw err;
   console.log(folder);
-  // 输出: /tmp/foo-itXde2
+  // 输出: /tmp/foo-itXde2 or C:\Users\...\AppData\Local\Temp\foo-itXde2
 });
 ```
 
@@ -30,7 +38,7 @@ fs.mkdtemp('/tmp/foo-', (err, folder) => {
 
 ```js
 // 新建的临时目录的父目录
-const tmpDir = '/tmp';
+const tmpDir = os.tmpdir();
 
 // 该方法是 *错误的*：
 fs.mkdtemp(tmpDir, (err, folder) => {
@@ -41,8 +49,8 @@ fs.mkdtemp(tmpDir, (err, folder) => {
 });
 
 // 该方法是 *正确的*：
-const path = require('path');
-fs.mkdtemp(tmpDir + path.sep, (err, folder) => {
+const { sep } = require('path');
+fs.mkdtemp(`${tmpDir}${sep}`, (err, folder) => {
   if (err) throw err;
   console.log(folder);
   // 会输出类似于 `/tmp/abc123`。

@@ -2,32 +2,37 @@
 added: v0.1.23
 -->
 
-* `path` {String}
-* Returns: {String}
+* `path` {string}
+* 返回: {string}
 
-The `path.normalize()` method normalizes the given `path`, resolving `'..'` and
-`'.'` segments.
+`path.normalize()` 方法会规范化给定的 `path`，并解析 `'..'` 和 `'.'` 片段。
 
-When multiple, sequential path segment separation characters are found (e.g.
-`/` on POSIX and `\` on Windows), they are replaced by a single instance of the
-platform specific path segment separator. Trailing separators are preserved.
+当发现多个连续的路径分隔符时（如 POSIX 上的 `/` 与 Windows 上的 `\` 或 `/`），它们会被单个的路径分隔符（POSIX 上是 `/`，Windows 上是 `\`）替换。
+末尾的多个分隔符会被保留。
 
-If the `path` is a zero-length string, `'.'` is returned, representing the
-current working directory.
+如果 `path` 是一个长度为零的字符串，则返回 `'.'`，表示当前工作目录。
 
-For example on POSIX:
+例如，在 POSIX 上：
 
 ```js
-path.normalize('/foo/bar//baz/asdf/quux/..')
-// Returns: '/foo/bar/baz/asdf'
+path.normalize('/foo/bar//baz/asdf/quux/..');
+// 返回: '/foo/bar/baz/asdf'
 ```
 
-On Windows:
+在 Windows 上：
 
 ```js
 path.normalize('C:\\temp\\\\foo\\bar\\..\\');
-// Returns: 'C:\\temp\\foo\\'
+// 返回: 'C:\\temp\\foo\\'
 ```
 
-A [`TypeError`][] is thrown if `path` is not a string.
+Since Windows recognizes multiple path separators, both separators will be
+replaced by instances of the Windows preferred separator (`\`):
+
+```js
+path.win32.normalize('C:////temp\\\\/\\/\\/foo/bar');
+// Returns: 'C:\\temp\\foo\\bar'
+```
+
+如果 `path` 不是一个字符串，则抛出 [`TypeError`]。
 

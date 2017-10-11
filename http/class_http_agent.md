@@ -2,19 +2,22 @@
 added: v0.3.4
 -->
 
-HTTP Agent 用于池化在 HTTP 客户端请求中使用的 socket。
+`Agent` 负责为 HTTP 客户端管理连接的持续与复用。
+它为一个给定的主机与端口维护着一个等待请求的队列，且为每个请求重复使用一个单一的 socket 连接直到队列为空，此时 socket 会被销毁或被放入一个连接池中，在连接池中等待被有着相同主机与端口的请求再次使用。
+是否被销毁或被放入连接池取决于 [`keepAlive` 选项]。
 
-HTTP Agent 也默认客户端请求使用 `Connection:keep-alive`。
-如果没有挂起的 HTTP 请求正在等待 socket 变成空闲的，则 socket 会被关闭。
-这意味着，当在负载状态下但仍不要求开发者使用 KeepAlive 手动关闭 HTTP 客户端时，Node.js 池有 keep-alive 的好处。
+连接池中的连接的 TCP Keep-Alive 是开启的，但服务器仍然可能关闭闲置的连接，在这种情况下，这些连接会被移出连接池，且当一个新的 HTTP 请求被创建时再为指定的主机与端口创建一个新的连接。
+服务器也可能拒绝允许同一连接上有多个请求，在这种情况下，连接会为每个请求重新创建，且不能被放入连接池。
+`Agent` 仍然会创建请求到服务器，但每个请求会出现在一个新的连接。
 
-如果选择使用 HTTP 的 KeepAlive，可以创建一个将标志设置为 `true` 的 Agent 对象（详见[构造器选项]）。
-那么，该 Agent 会保留没用过的 socket 在池中用于后续的使用。
-它们会被显式地标记，以便不用保持 Node.js 进程运行。
-当然，当它们不再被使用时，应该显式地 [`destroy()`] KeepAlive 代理，以便 Socket 会被关闭。
+但一个连接被客户端或服务器关闭时，它会被移出连接池。
+连接池中任何未被使用的 socket 会被释放，从而使 Node.js 进程在没有请求时不用保持运行。
+（查看 [socket.unref()]）。
 
-当 socket 触发一个 `'close'` 事件或一个特殊的 `'agentRemove'` 事件时，socket 会从代理池中被移除。
-这意味着，如果打算使一个 HTTP 请求保持长时间打开且不想让它留在池中，则可以如下操作：
+当 `Agent` 实例不再被使用时，建议 [`destroy()`] 它，因为未被使用的 socket 也会消耗操作系统资源。
+
+当 socket 触发 `'close'` 事件或 `'agentRemove'` 事件时，它会被移出代理。
+当打算长时间保持打开一个 HTTP 请求且不想它留在代理中，则可以如下处理：
 
 ```js
 http.get(options, (res) => {
@@ -24,7 +27,10 @@ http.get(options, (res) => {
 });
 ```
 
-或者，可以选择使用 `agent:false` 完全地退出池：
+代理也可被用于单独的请求。
+使用 `{agent: false}` 作为 `http.get()` 函数或 `http.request()` 函数的选项，则会为客户端连接创建一个默认配置的一次性使用的 `Agent`。
+
+`agent:false`:
 
 ```js
 http.get({

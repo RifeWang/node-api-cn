@@ -1,5 +1,13 @@
+<!-- YAML
+changes:
+  - version: v7.0.0
+    pr-url: https://github.com/nodejs/node/pull/7941
+    description: Accessing this module will now emit a deprecation warning.
+-->
 
-> 稳定性: 0 - 废弃的
+<!--introduced_in=v0.10.0-->
+
+> Stability: 0 - Deprecated
 
 **The version of the punycode module bundled in Node.js is being deprecated**.
 In a future major version of Node.js this module will be removed. Users

@@ -2,22 +2,31 @@
 added: v0.1.90
 -->
 
-A factory function, which returns a new [`net.Socket`][] and automatically
-connects with the supplied `options`.
+* `options` {Object} Required. Will be passed to both the
+  [`new net.Socket([options])`][`new net.Socket(options)`] call and the
+  [`socket.connect(options[, connectListener])`][`socket.connect(options)`]
+  method.
+* `connectListener` {Function} Common parameter of the
+  [`net.createConnection()`][] functions. If supplied, will be added as
+  a listener for the [`'connect'`][] event on the returned socket once.
+* Returns: {net.Socket} The newly created socket used to start the connection.
 
-The options are passed to both the [`net.Socket`][] constructor and the
-[`socket.connect`][] method.
+For available options, see
+[`new net.Socket([options])`][`new net.Socket(options)`]
+and [`socket.connect(options[, connectListener])`][`socket.connect(options)`].
 
-Passing `timeout` as an option will call [`socket.setTimeout()`][] after the socket is created, but before it is connecting.
+Additional options:
 
-The `connectListener` parameter will be added as a listener for the
-[`'connect'`][] event once.
+* `timeout` {number} If set, will be used to call
+  [`socket.setTimeout(timeout)`][] after the socket is created, but before
+  it starts the connection.
 
-Here is an example of a client of the previously described echo server:
+Following is an example of a client of the echo server described
+in the [`net.createServer()`][] section:
 
 ```js
 const net = require('net');
-const client = net.createConnection({port: 8124}, () => {
+const client = net.createConnection({ port: 8124 }, () => {
   //'connect' listener
   console.log('connected to server!');
   client.write('world!\r\n');
@@ -35,6 +44,6 @@ To connect on the socket `/tmp/echo.sock` the second line would just be
 changed to
 
 ```js
-const client = net.connect({path: '/tmp/echo.sock'});
+const client = net.createConnection({ path: '/tmp/echo.sock' });
 ```
 

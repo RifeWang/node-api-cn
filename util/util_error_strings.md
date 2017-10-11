@@ -3,9 +3,9 @@ added: v0.3.0
 deprecated: v0.11.3
 -->
 
-> Stability: 0 - Deprecated: Use [`console.error()`][] instead.
+> 稳定性: 0 - 废弃的: 使用 [`console.error()`] 代替。
 
-* `...strings` {String} The message to print to `stderr`
+* `...strings` {string} The message to print to `stderr`
 
 Deprecated predecessor of `console.error`.
 

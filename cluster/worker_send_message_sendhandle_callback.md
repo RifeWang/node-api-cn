@@ -1,5 +1,9 @@
 <!-- YAML
 added: v0.7.0
+changes:
+  - version: v4.0.0
+    pr-url: https://github.com/nodejs/node/pull/2620
+    description: The `callback` parameter is supported now.
 -->
 
 * `message` {Object}
@@ -7,15 +11,13 @@ added: v0.7.0
 * `callback` {Function}
 * Returns: Boolean
 
-Send a message to a worker or master, optionally with a handle.
+发送一个消息给工作进程或主进程，也可以附带发送一个handle。
 
-In the master this sends a message to a specific worker. It is identical to
-[`ChildProcess.send()`][].
+主进程调用这个方法会发送消息给具体的工作进程。还有一个等价的方法是[`ChildProcess.send()`][]。
 
-In a worker this sends a message to the master. It is identical to
-`process.send()`.
+工作进程调用这个方法会发送消息给主进程。还有一个等价方法是`process.send()`。
 
-This example will echo back all messages from the master:
+这个例子里面，工作进程将主进程发送的消息echo回去。
 
 ```js
 if (cluster.isMaster) {

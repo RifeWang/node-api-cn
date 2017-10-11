@@ -2,18 +2,23 @@
 added: v0.11.14
 -->
 
-* `options` {Object} - Required. Supports the following properties:
-  * `port` {Number} - Optional.
-  * `host` {String} - Optional.
-  * `backlog` {Number} - Optional.
-  * `path` {String} - Optional.
-  * `exclusive` {Boolean} - Optional.
-* `callback` {Function} - Optional.
+* `options` {Object} Required. Supports the following properties:
+  * `port` {number}
+  * `host` {string}
+  * `path` {string} Will be ignored if `port` is specified. See
+    [Identifying paths for IPC connections][].
+  * `backlog` {number} Common parameter of [`server.listen()`][]
+    functions
+  * `exclusive` {boolean} Default to `false`
+* `callback` {Function} Common parameter of [`server.listen()`][]
+  functions
+* Returns: {net.Server}
 
-The `port`, `host`, and `backlog` properties of `options`, as well as the
-optional callback function, behave as they do on a call to
-[`server.listen([port][, hostname][, backlog][, callback])`][`server.listen(port, host, backlog, callback)`].
-Alternatively, the `path` option can be used to specify a UNIX socket.
+If `port` is specified, it behaves the same as
+[`server.listen([port][, hostname][, backlog][, callback])`][`server.listen(port, host)`].
+Otherwise, if `path` is specified, it behaves the same as
+[`server.listen(path[, backlog][, callback])`][`server.listen(path)`].
+If none of them is specified, an error will be thrown.
 
 If `exclusive` is `false` (default), then cluster workers will use the same
 underlying handle, allowing connection handling duties to be shared. When
@@ -28,7 +33,4 @@ server.listen({
   exclusive: true
 });
 ```
-
-*Note*: The `server.listen()` method may be called multiple times. Each
-subsequent call will *re-open* the server using the provided options.
 

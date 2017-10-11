@@ -2,5 +2,4 @@
 added: v0.5.8
 -->
 
-Returns a new [Gzip][] object with an [options][].
-
+创建并返回一个带有给定 options 的新的 [Gzip][] 对象。

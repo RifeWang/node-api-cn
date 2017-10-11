@@ -1,15 +1,16 @@
 
-* `chunk` {Buffer|String} The chunk to be transformed. Will **always**
-  be a buffer unless the `decodeStrings` option was set to `false`.
-* `encoding` {String} If the chunk is a string, then this is the
+* `chunk` {Buffer|string|any} The chunk to be transformed. Will **always**
+  be a buffer unless the `decodeStrings` option was set to `false`
+  or the stream is operating in object mode.
+* `encoding` {string} If the chunk is a string, then this is the
   encoding type. If chunk is a buffer, then this is the special
   value - 'buffer', ignore it in this case.
 * `callback` {Function} A callback function (optionally with an error
   argument and data) to be called after the supplied `chunk` has been
   processed.
 
-*Note*: **This function MUST NOT be called by application code directly.** It
-should be implemented by child classes, and called only by the internal Readable
+*Note*: This function MUST NOT be called by application code directly. It
+should be implemented by child classes, and called by the internal Readable
 class methods only.
 
 All Transform stream implementations must provide a `_transform()`
@@ -30,12 +31,12 @@ argument is passed to the `callback`, it will be forwarded on to the
 `readable.push()` method. In other words the following are equivalent:
 
 ```js
-transform.prototype._transform = function (data, encoding, callback) {
+transform.prototype._transform = function(data, encoding, callback) {
   this.push(data);
   callback();
 };
 
-transform.prototype._transform = function (data, encoding, callback) {
+transform.prototype._transform = function(data, encoding, callback) {
   callback(null, data);
 };
 ```
@@ -44,3 +45,6 @@ The `transform._transform()` method is prefixed with an underscore because it
 is internal to the class that defines it, and should never be called directly by
 user programs.
 
+`transform._transform()` is never called in  parallel; streams implement a
+queue mechanism, and to receive the next chunk, `callback` must be
+called, either synchronously or asynchronously.

@@ -1,29 +1,23 @@
 <!-- YAML
 added: v0.7.1
+changes:
+  - version: v6.4.0
+    pr-url: https://github.com/nodejs/node/pull/7838
+    description: The `stdio` option is supported now.
 -->
 
-* `settings` {Object}
-  * `exec` {String} file path to worker file.  (Default=`process.argv[1]`)
-  * `args` {Array} string arguments passed to worker.
-    (Default=`process.argv.slice(2)`)
-  * `silent` {Boolean} whether or not to send output to parent's stdio.
-    (Default=`false`)
-  * `stdio` {Array} Configures the stdio of forked processes. When this option
-    is provided, it overrides `silent`.
+* `settings` {Object} 详见 [`cluster.settings`]。
 
-`setupMaster` is used to change the default 'fork' behavior. Once called,
-the settings will be present in `cluster.settings`.
+用于修改默认'fork' 行为。一旦调用，将会按照`cluster.settings`进行设置。
 
-Note that:
+注意:
 
-* any settings changes only affect future calls to `.fork()` and have no
-  effect on workers that are already running
-* The *only* attribute of a worker that cannot be set via `.setupMaster()` is
-  the `env` passed to `.fork()`
-* the defaults above apply to the first call only, the defaults for later
-  calls is the current value at the time of `cluster.setupMaster()` is called
 
-Example:
+* 所有的设置只对后来的 `.fork()`调用有效，对之前的工作进程无影响。
+* 唯一无法通过 `.setupMaster()`设置的属性是传递给`.fork()`的`env`属性。
+* 上述的默认值只在第一次调用时有效，当后续调用时，将采用`cluster.setupMaster()`调用时的当前值。
+
+例子:
 
 ```js
 const cluster = require('cluster');
@@ -40,5 +34,5 @@ cluster.setupMaster({
 cluster.fork(); // http worker
 ```
 
-This can only be called from the master process.
+只能由主进程调用。
 

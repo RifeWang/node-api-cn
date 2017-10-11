@@ -1,11 +1,8 @@
 <!-- YAML
 added: v0.11.8
 -->
-
-The `spkac` data structure includes a public key and a challenge. The
-`certificate.exportPublicKey()` returns the public key component in the
-form of a Node.js [`Buffer`][]. The `spkac` argument can be either a string
-or a [`Buffer`][].
+- `spkac` {string | Buffer | TypedArray | DataView}
+- 返回 {Buffer} 数据结构的公钥部分，`spkac` 包含一个公钥和一个 challange。
 
 ```js
 const cert = require('crypto').Certificate();
@@ -14,4 +11,3 @@ const publicKey = cert.exportPublicKey(spkac);
 console.log(publicKey);
 // Prints: the public key as <Buffer ...>
 ```
-

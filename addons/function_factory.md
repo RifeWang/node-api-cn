@@ -1,6 +1,5 @@
 
-Another common scenario is creating JavaScript functions that wrap C++
-functions and returning those back to JavaScript:
+另一种常见情况是创建 JavaScript 函数来包装 C++ 函数，并返回到 JavaScript：
 
 ```cpp
 // addon.cc
@@ -28,7 +27,7 @@ void CreateFunction(const FunctionCallbackInfo<Value>& args) {
   Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, MyFunction);
   Local<Function> fn = tpl->GetFunction();
 
-  // omit this to make it anonymous
+  // 可以省略这步使它匿名
   fn->SetName(String::NewFromUtf8(isolate, "theFunction"));
 
   args.GetReturnValue().Set(fn);
@@ -38,12 +37,12 @@ void Init(Local<Object> exports, Local<Object> module) {
   NODE_SET_METHOD(module, "exports", CreateFunction);
 }
 
-NODE_MODULE(addon, Init)
+NODE_MODULE(NODE_GYP_MODULE_NAME, Init)
 
 }  // namespace demo
 ```
 
-To test:
+测试它：
 
 ```js
 // test.js
@@ -51,7 +50,7 @@ const addon = require('./build/Release/addon');
 
 const fn = addon();
 console.log(fn());
-// Prints: 'hello world'
+// 打印: 'hello world'
 ```
 
 

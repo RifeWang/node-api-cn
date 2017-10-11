@@ -2,11 +2,14 @@
 added: v0.1.90
 -->
 
-Emitted when the other end of the socket sends a FIN packet.
+Emitted when the other end of the socket sends a FIN packet, thus ending the
+readable side of the socket.
 
-By default (`allowHalfOpen == false`) the socket will destroy its file
-descriptor  once it has written out its pending write queue.  However, by
-setting `allowHalfOpen == true` the socket will not automatically `end()`
-its side allowing the user to write arbitrary amounts of data, with the
-caveat that the user is required to `end()` their side now.
+By default (`allowHalfOpen` is `false`) the socket will send a FIN packet
+back and destroy its file descriptor once it has written out its pending
+write queue. However, if `allowHalfOpen` is set to `true`, the socket will
+not automatically [`end()`][`socket.end()`] its writable side, allowing the
+user to write arbitrary amounts of data. The user must call
+[`end()`][`socket.end()`] explicitly to close the connection (i.e. sending a
+FIN packet back).
 

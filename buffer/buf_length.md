@@ -2,7 +2,7 @@
 added: v0.1.90
 -->
 
-* {Integer}
+* {integer}
 
 返回 `buf` 在字节数上分配的内存量。
 注意，这并不一定反映 `buf` 内可用的数据量。
@@ -27,7 +27,7 @@ console.log(buf.length);
 例子：
 
 ```js
-var buf = Buffer.allocUnsafe(10);
+let buf = Buffer.allocUnsafe(10);
 
 buf.write('abcdefghj', 0, 'ascii');
 

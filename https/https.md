@@ -1,6 +1,7 @@
 
-> Stability: 2 - Stable
+<!--introduced_in=v0.10.0-->
 
-HTTPS is the HTTP protocol over TLS/SSL. In Node.js this is implemented as a
-separate module.
+> 稳定性: 2 - 稳定的
+
+HTTPS 是 HTTP 基于 TLS/SSL 的版本。在 Node.js 中，它被实现为一个独立的模块。
 

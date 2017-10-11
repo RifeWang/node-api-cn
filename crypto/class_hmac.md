@@ -1,30 +1,25 @@
 <!-- YAML
 added: v0.1.94
 -->
+`Hmac`类是用于创建加密Hmac摘要的工具。它可以有两种用法:
+- 作为[stream][],它既可读又可写，数据被写入要在可读的方面生成一个经过计算的HMAC摘要。
+- 使用[`hmac.update()`][]和[`hmac.digest()`][]方法产生计算后的HMAC摘要。
 
-The `Hmac` Class is a utility for creating cryptographic HMAC digests. It can
-be used in one of two ways:
+[`crypto.createHmac()`][]方法用来创建`Hmac`实例。`Hmac`不能直接使用`new`关键字创建对象。
 
-- As a [stream][] that is both readable and writable, where data is written
-  to produce a computed HMAC digest on the readable side, or
-- Using the [`hmac.update()`][] and [`hmac.digest()`][] methods to produce the
-  computed HMAC digest.
-
-The [`crypto.createHmac()`][] method is used to create `Hmac` instances. `Hmac`
-objects are not to be created directly using the `new` keyword.
-
-Example: Using `Hmac` objects as streams:
+示例:使用`Hmac`对象作为流:
 
 ```js
 const crypto = require('crypto');
 const hmac = crypto.createHmac('sha256', 'a secret');
 
 hmac.on('readable', () => {
-  var data = hmac.read();
-  if (data)
+  const data = hmac.read();
+  if (data) {
     console.log(data.toString('hex'));
     // Prints:
     //   7fd04df92f636fd450bc841c9418e5825c17f33ad9c87c518115a45971f7f77e
+  }
 });
 
 hmac.write('some data to hash');

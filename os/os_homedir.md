@@ -2,8 +2,7 @@
 added: v2.3.0
 -->
 
-* Returns: {String}
+* Returns: {string}
 
-The `os.homedir()` method returns the home directory of the current user as a
-string.
+`os.homedir()` 方法以字符串的形式返回当前用户的home目录.
 

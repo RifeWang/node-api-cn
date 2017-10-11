@@ -2,29 +2,33 @@
 added: v0.5.0
 -->
 
-Creates a new server. The `connectionListener` argument is
-automatically set as a listener for the [`'connection'`][] event.
+Creates a new TCP or [IPC][] server.
 
-`options` is an object with the following defaults:
+* `options` {Object}
+  * `allowHalfOpen` {boolean} Default to `false`. Indicates whether half-opened
+    TCP connections are allowed.
+  * `pauseOnConnect` {boolean} Default to `false`. Indicates whether the socket
+    should be paused on incoming connections.
+* `connectionListener` {Function} Automatically set as a listener for the
+  [`'connection'`][] event
+* Returns: {net.Server}
 
-```js
-{
-  allowHalfOpen: false,
-  pauseOnConnect: false
-}
-```
+If `allowHalfOpen` is set to `true`, when the other end of the socket
+sends a FIN packet, the server will only send a FIN packet back when
+[`socket.end()`][] is explicitly called, until then the connection is
+half-closed (non-readable but still writable). See [`'end'`][] event
+and [RFC 1122][half-closed] (section 4.2.2.13) for more information.
 
-If `allowHalfOpen` is `true`, then the socket won't automatically send a FIN
-packet when the other end of the socket sends a FIN packet. The socket becomes
-non-readable, but still writable. You should call the [`end()`][] method explicitly.
-See [`'end'`][] event for more information.
+If `pauseOnConnect` is set to `true`, then the socket associated with each
+incoming connection will be paused, and no data will be read from its handle.
+This allows connections to be passed between processes without any data being
+read by the original process. To begin reading data from a paused socket, call
+[`socket.resume()`][].
 
-If `pauseOnConnect` is `true`, then the socket associated with each incoming
-connection will be paused, and no data will be read from its handle. This allows
-connections to be passed between processes without any data being read by the
-original process. To begin reading data from a paused socket, call [`resume()`][].
+The server can be a TCP server or a [IPC][] server, depending on what it
+[`listen()`][`server.listen()`] to.
 
-Here is an example of an echo server which listens for connections
+Here is an example of an TCP echo server which listens for connections
 on port 8124:
 
 ```js
@@ -48,8 +52,8 @@ server.listen(8124, () => {
 
 Test this by using `telnet`:
 
-```sh
-telnet localhost 8124
+```console
+$ telnet localhost 8124
 ```
 
 To listen on the socket `/tmp/echo.sock` the third line from the last would
@@ -63,7 +67,6 @@ server.listen('/tmp/echo.sock', () => {
 
 Use `nc` to connect to a UNIX domain socket server:
 
-```js
-nc -U /tmp/echo.sock
+```console
+$ nc -U /tmp/echo.sock
 ```
-

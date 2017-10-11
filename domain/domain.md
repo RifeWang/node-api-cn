@@ -1,7 +1,16 @@
+<!-- YAML
+changes:
+  - version: v8.0.0
+    pr-url: https://github.com/nodejs/node/pull/12489
+    description: Handlers for `Promise`s are now invoked in the domain in which
+                 the first promise of a chain was created.
+-->
 
-> 稳定性: 0 - 废弃的
+<!--introduced_in=v0.10.0-->
 
-**该模块即将废弃**。Once a replacement API has been
+> Stability: 0 - Deprecated
+
+**This module is pending deprecation**. Once a replacement API has been
 finalized, this module will be fully deprecated. Most end users should
 **not** have cause to use this module. Users who absolutely must have
 the functionality that domains provide may rely on it for the time being

@@ -4,6 +4,8 @@ added: v0.1.90
 
 * {Error}
 
-Emitted when an error occurs.  The [`'close'`][] event will be called directly
-following this event.  See example in discussion of `server.listen`.
+当错误出现的时候触发. 不同与 [`net.Socket`][], [`'close'`][]
+事件不会在这个事件触发后继续触发 除非
+[`server.close()`][] 是手动调用. 在
+[`server.listen()`][]中的例子.
 

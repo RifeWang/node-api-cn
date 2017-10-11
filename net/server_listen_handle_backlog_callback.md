@@ -3,23 +3,12 @@ added: v0.5.10
 -->
 
 * `handle` {Object}
-* `backlog` {Number}
-* `callback` {Function}
+* `backlog` {number} Common parameter of [`server.listen()`][] functions
+* `callback` {Function} Common parameter of [`server.listen()`][] functions
+* Returns: {net.Server}
 
-The `handle` object can be set to either a server or socket (anything
-with an underlying `_handle` member), or a `{fd: <n>}` object.
+启动一个服务器，监听已经绑定到端口、UNIX 域套接字或 Windows 命名管道的给定句柄上的连接。
 
-This will cause the server to accept connections on the specified
-handle, but it is presumed that the file descriptor or handle has
-already been bound to a port or domain socket.
+句柄对象可以是服务器、套接字（任何具有底层 `_handle` 成员的东西），也可以是具有作为有效文件描述符的 `fd` 成员的对象。
 
-Listening on a file descriptor is not supported on Windows.
-
-This function is asynchronous.  When the server has been bound,
-[`'listening'`][] event will be emitted.
-The last parameter `callback` will be added as a listener for the
-[`'listening'`][] event.
-
-The parameter `backlog` behaves the same as in
-[`server.listen([port][, hostname][, backlog][, callback])`][`server.listen(port, host, backlog, callback)`].
-
+*注意*：在Windows上不支持在文件描述符上进行监听。

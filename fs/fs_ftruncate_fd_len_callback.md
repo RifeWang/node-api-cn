@@ -1,9 +1,14 @@
 <!-- YAML
 added: v0.8.6
+changes:
+  - version: v7.0.0
+    pr-url: https://github.com/nodejs/node/pull/7897
+    description: The `callback` parameter is no longer optional. Not passing
+                 it will emit a deprecation warning.
 -->
 
-* `fd` {Integer}
-* `len` {Integer} 默认 = `0`
+* `fd` {integer}
+* `len` {integer} 默认 = `0`
 * `callback` {Function}
 
 异步的 ftruncate(2)。
@@ -39,7 +44,7 @@ const fd = fs.openSync('temp.txt', 'r+');
 
 // 截断文件至前10个字节，但实际大小是7个字节
 fs.ftruncate(fd, 10, (err) => {
-  assert.ifError(!err);
+  assert.ifError(err);
   console.log(fs.readFileSync('temp.txt'));
 });
 // 输出: <Buffer 4e 6f 64 65 2e 6a 73 00 00 00>

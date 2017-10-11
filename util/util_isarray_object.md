@@ -3,7 +3,7 @@ added: v0.6.0
 deprecated: v4.0.0
 -->
 
-> Stability: 0 - Deprecated
+> 稳定性: 0 - 废弃的
 
 * `object` {any}
 
@@ -16,7 +16,7 @@ const util = require('util');
 
 util.isArray([]);
 // Returns: true
-util.isArray(new Array);
+util.isArray(new Array());
 // Returns: true
 util.isArray({});
 // Returns: false

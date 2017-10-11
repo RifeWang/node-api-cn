@@ -1,9 +1,11 @@
 
-> Stability: 2 - Stable
+<!--introduced_in=v0.10.0-->
 
-The `util` module is primarily designed to support the needs of Node.js' own
-internal APIs. However, many of the utilities are useful for application and
-module developers as well. It can be accessed using:
+> 稳定性: 2 - 稳定的
+
+`util` 模块主要用于支持 Node.js 内部 API 的需求。
+大部分实用工具也可用于应用程序与模块开发者。
+它可以通过以下方式使用：
 
 ```js
 const util = require('util');

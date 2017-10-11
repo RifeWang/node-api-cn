@@ -1,9 +1,21 @@
 <!-- YAML
 added: v0.11.15
+changes:
+  - version: v7.6.0
+    pr-url: https://github.com/nodejs/node/pull/10739
+    description: The `path` parameter can be a WHATWG `URL` object using `file:`
+                 protocol. Support is currently still *experimental*.
+  - version: v6.3.0
+    pr-url: https://github.com/nodejs/node/pull/6534
+    description: The constants like `fs.R_OK`, etc which were present directly
+                 on `fs` were moved into `fs.constants` as a soft deprecation.
+                 Thus for Node `< v6.3.0` use `fs` to access those constants, or
+                 do something like `(fs.constants || fs).R_OK` to work with all
+                 versions.
 -->
 
-* `path` {String | Buffer}
-* `mode` {Integer}
+* `path` {string|Buffer|URL}
+* `mode` {integer} **Default:** `fs.constants.F_OK`
 * `callback` {Function}
 
 测试 `path` 指定的文件或目录的用户权限。
@@ -57,12 +69,12 @@ fs.access('myfile', (err) => {
 ```js
 fs.open('myfile', 'wx', (err, fd) => {
   if (err) {
-    if (err.code === "EEXIST") {
+    if (err.code === 'EEXIST') {
       console.error('myfile already exists');
       return;
-    } else {
-      throw err;
     }
+
+    throw err;
   }
 
   writeMyData(fd);
@@ -74,12 +86,12 @@ fs.open('myfile', 'wx', (err, fd) => {
 ```js
 fs.access('myfile', (err) => {
   if (err) {
-    if (err.code === "ENOENT") {
+    if (err.code === 'ENOENT') {
       console.error('myfile does not exist');
       return;
-    } else {
-      throw err;
     }
+
+    throw err;
   }
 
   fs.open('myfile', 'r', (err, fd) => {
@@ -89,17 +101,17 @@ fs.access('myfile', (err) => {
 });
 ```
 
-**写入（推荐）**
+**读取（推荐）**
 
 ```js
 fs.open('myfile', 'r', (err, fd) => {
   if (err) {
-    if (err.code === "ENOENT") {
+    if (err.code === 'ENOENT') {
       console.error('myfile does not exist');
       return;
-    } else {
-      throw err;
     }
+
+    throw err;
   }
 
   readMyData(fd);

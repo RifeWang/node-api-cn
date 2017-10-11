@@ -1,24 +1,36 @@
+<!-- YAML
+changes:
+  - version: v8.4.0
+    pr-url: https://github.com/nodejs/node/pull/14636
+    description: The `readableHighWaterMark` and `writableHighWaterMark` options
+                 are supported now.
+-->
 
 * `options` {Object} Passed to both Writable and Readable
   constructors. Also has the following fields:
-  * `allowHalfOpen` {Boolean} Defaults to `true`. If set to `false`, then
-    the stream will automatically end the readable side when the
-    writable side ends and vice versa.
-  * `readableObjectMode` {Boolean} Defaults to `false`. Sets `objectMode`
+  * `allowHalfOpen` {boolean} Defaults to `true`. If set to `false`, then
+    the stream will automatically end the writable side when the
+    readable side ends.
+  * `readableObjectMode` {boolean} Defaults to `false`. Sets `objectMode`
     for readable side of the stream. Has no effect if `objectMode`
     is `true`.
-  * `writableObjectMode` {Boolean} Defaults to `false`. Sets `objectMode`
+  * `writableObjectMode` {boolean} Defaults to `false`. Sets `objectMode`
     for writable side of the stream. Has no effect if `objectMode`
     is `true`.
+  * `readableHighWaterMark` {number} Sets `highWaterMark` for the readable side
+    of the stream. Has no effect if `highWaterMark` is provided.
+  * `writableHighWaterMark` {number} Sets `highWaterMark` for the writable side
+    of the stream. Has no effect if `highWaterMark` is provided.
 
 For example:
 
 ```js
-const Duplex = require('stream').Duplex;
+const { Duplex } = require('stream');
 
 class MyDuplex extends Duplex {
   constructor(options) {
     super(options);
+    // ...
   }
 }
 ```
@@ -26,7 +38,7 @@ class MyDuplex extends Duplex {
 Or, when using pre-ES6 style constructors:
 
 ```js
-const Duplex = require('stream').Duplex;
+const { Duplex } = require('stream');
 const util = require('util');
 
 function MyDuplex(options) {
@@ -40,7 +52,7 @@ util.inherits(MyDuplex, Duplex);
 Or, using the Simplified Constructor approach:
 
 ```js
-const Duplex = require('stream').Duplex;
+const { Duplex } = require('stream');
 
 const myDuplex = new Duplex({
   read(size) {

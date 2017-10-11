@@ -1,11 +1,15 @@
 <!-- YAML
 added: v0.5.0
+changes:
+  - version: v5.7.0
+    pr-url: https://github.com/nodejs/node/pull/4935
+    description: The `encoding` parameter is supported now.
 -->
 
-* `value` {String | Buffer | Integer} 用来填充 `buf` 的值
-* `offset` {Integer} 开始填充 `buf` 的位置。**默认:** `0`
-* `end` {Integer} 结束填充 `buf` 的位置（不包含）。**默认:** [`buf.length`]
-* `encoding` {String} 如果 `value` 是一个字符串，则这是它的字符编码。
+* `value` {string|Buffer|integer} 用来填充 `buf` 的值
+* `offset` {integer} 开始填充 `buf` 的位置。**默认:** `0`
+* `end` {integer} 结束填充 `buf` 的位置（不包含）。**默认:** [`buf.length`]
+* `encoding` {string} 如果 `value` 是一个字符串，则这是它的字符编码。
   **默认:** `'utf8'`
 * 返回: {Buffer} `buf` 的引用
 
@@ -23,8 +27,6 @@ console.log(b.toString());
 
 `value` 如果不是一个字符串或整数，则会被强行转换为 `uint32` 值。
 
-If the final write of a `fill()` operation falls on a multi-byte character,
-then only the first bytes of that character that fit into `buf` are written.
 如果 `fill()` 操作的最后一次写入的是一个多字节字符，则只有字符中适合 `buf` 的第一个字节会被写入。
 
 例子：用一个两个字节的字符填充 `Buffer`。

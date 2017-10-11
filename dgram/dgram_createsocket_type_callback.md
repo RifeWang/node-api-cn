@@ -2,7 +2,7 @@
 added: v0.1.99
 -->
 
-* `type` {String} - Either 'udp4' or 'udp6'
+* `type` {string} - Either 'udp4' or 'udp6'
 * `callback` {Function} - Attached as a listener to `'message'` events.
   Optional
 * Returns: {dgram.Socket}
@@ -17,16 +17,3 @@ not passed to  [`socket.bind()`][] the method will bind the socket to the "all
 interfaces" address on a random port (it does the right thing for both `udp4`
 and `udp6` sockets). The bound address and port can be retrieved using
 [`socket.address().address`][] and [`socket.address().port`][].
-
-[`EventEmitter`]: events.html
-[`Buffer`]: buffer.html
-[`'close'`]: #dgram_event_close
-[`close()`]: #dgram_socket_close_callback
-[`cluster`]: cluster.html
-[`dgram.createSocket()`]: #dgram_dgram_createsocket_options_callback
-[`dgram.Socket#bind()`]: #dgram_socket_bind_options_callback
-[`Error`]: errors.html#errors_class_error
-[`socket.address().address`]: #dgram_socket_address
-[`socket.address().port`]: #dgram_socket_address
-[`socket.bind()`]: #dgram_socket_bind_port_address_callback
-[byte length]: buffer.html#buffer_class_method_buffer_bytelength_string_encoding

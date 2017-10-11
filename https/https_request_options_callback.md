@@ -1,29 +1,42 @@
 <!-- YAML
 added: v0.3.6
+changes:
+  - version: v7.5.0
+    pr-url: https://github.com/nodejs/node/pull/10638
+    description: The `options` parameter can be a WHATWG `URL` object.
 -->
+- `options` {Object | string | URL} Accepts all `options` from [`http.request()`][],
+  with some differences in default values:
+  - `protocol` Defaults to `https:`
+  - `port` Defaults to `443`.
+  - `agent` Defaults to `https.globalAgent`.
+- `callback` {Function}
 
-Makes a request to a secure web server.
+向一个安全的服务器发起一个请求。
 
-`options` can be an object or a string. If `options` is a string, it is
-automatically parsed with [`url.parse()`][].
+The following additional `options` from [`tls.connect()`][] are also accepted when using a
+  custom [`Agent`][]:
+  `pfx`, `key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`, `secureProtocol`, `servername`
 
-All options from [`http.request()`][] are valid.
+参数 `options` 可以是一个对象、或字符串、或 [`URL`] 对象。
+如果参数 `options` 是一个字符串, 它自动被 [`url.parse()`] 所解析。
+If it is a [`URL`][] object, it will be automatically converted to an ordinary `options` object.
 
-Example:
+例子:
 
 ```js
 const https = require('https');
 
-var options = {
+const options = {
   hostname: 'encrypted.google.com',
   port: 443,
   path: '/',
   method: 'GET'
 };
 
-var req = https.request(options, (res) => {
-  console.log('statusCode:', res.statusCode);
-  console.log('headers:', res.headers);
+const req = https.request(options, (res) => {
+  console.log('状态码：', res.statusCode);
+  console.log('请求头：', res.headers);
 
   res.on('data', (d) => {
     process.stdout.write(d);
@@ -36,60 +49,10 @@ req.on('error', (e) => {
 req.end();
 ```
 
-The options argument has the following options
-
-- `host`: A domain name or IP address of the server to issue the request to.
-  Defaults to `'localhost'`.
-- `hostname`: Alias for `host`. To support `url.parse()` `hostname` is
-  preferred over `host`.
-- `family`: IP address family to use when resolving `host` and `hostname`.
-  Valid values are `4` or `6`. When unspecified, both IP v4 and v6 will be
-  used.
-- `port`: Port of remote server. Defaults to 443.
-- `localAddress`: Local interface to bind for network connections.
-- `socketPath`: Unix Domain Socket (use one of host:port or socketPath).
-- `method`: A string specifying the HTTP request method. Defaults to `'GET'`.
-- `path`: Request path. Defaults to `'/'`. Should include query string if any.
-  E.G. `'/index.html?page=12'`. An exception is thrown when the request path
-  contains illegal characters. Currently, only spaces are rejected but that
-  may change in the future.
-- `headers`: An object containing request headers.
-- `auth`: Basic authentication i.e. `'user:password'` to compute an
-  Authorization header.
-- `agent`: Controls [`Agent`][] behavior. When an Agent is used request will
-  default to `Connection: keep-alive`. Possible values:
- - `undefined` (default): use [`globalAgent`][] for this host and port.
- - `Agent` object: explicitly use the passed in `Agent`.
- - `false`: opts out of connection pooling with an Agent, defaults request to
-   `Connection: close`.
-
-The following options from [`tls.connect()`][] can also be specified:
-
-- `pfx`: Certificate, Private key and CA certificates to use for SSL. Default `null`.
-- `key`: Private key to use for SSL. Default `null`.
-- `passphrase`: A string of passphrase for the private key or pfx. Default `null`.
-- `cert`: Public x509 certificate to use. Default `null`.
-- `ca`: A string, [`Buffer`][] or array of strings or [`Buffer`][]s of trusted
-  certificates in PEM format. If this is omitted several well known "root"
-  CAs will be used, like VeriSign. These are used to authorize connections.
-- `ciphers`: A string describing the ciphers to use or exclude. Consult
-  <https://www.openssl.org/docs/man1.0.2/apps/ciphers.html#CIPHER-LIST-FORMAT> for
-  details on the format.
-- `rejectUnauthorized`: If `true`, the server certificate is verified against
-  the list of supplied CAs. An `'error'` event is emitted if verification
-  fails. Verification happens at the connection level, *before* the HTTP
-  request is sent. Default `true`.
-- `secureProtocol`: The SSL method to use, e.g. `SSLv3_method` to force
-  SSL version 3. The possible values depend on your installation of
-  OpenSSL and are defined in the constant [`SSL_METHODS`][].
-- `servername`: Servername for SNI (Server Name Indication) TLS extension.
-
-In order to specify these options, use a custom [`Agent`][].
-
-Example:
+Example using options from [`tls.connect()`][]:
 
 ```js
-var options = {
+const options = {
   hostname: 'encrypted.google.com',
   port: 443,
   path: '/',
@@ -99,17 +62,17 @@ var options = {
 };
 options.agent = new https.Agent(options);
 
-var req = https.request(options, (res) => {
-  ...
+const req = https.request(options, (res) => {
+  // ...
 });
 ```
 
-Alternatively, opt out of connection pooling by not using an `Agent`.
+也可以不对连接池使用 `Agent`。
 
-Example:
+例子:
 
 ```js
-var options = {
+const options = {
   hostname: 'encrypted.google.com',
   port: 443,
   path: '/',
@@ -119,25 +82,20 @@ var options = {
   agent: false
 };
 
-var req = https.request(options, (res) => {
-  ...
+const req = https.request(options, (res) => {
+  // ...
 });
 ```
 
-[`Agent`]: #https_class_https_agent
-[`Buffer`]: buffer.html#buffer_buffer
-[`globalAgent`]: #https_https_globalagent
-[`http.Agent`]: http.html#http_class_http_agent
-[`http.close()`]: http.html#http_server_close_callback
-[`http.get()`]: http.html#http_http_get_options_callback
-[`http.listen()`]: http.html#http_server_listen_port_hostname_backlog_callback
-[`http.request()`]: http.html#http_http_request_options_callback
-[`http.Server#setTimeout()`]: http.html#http_server_settimeout_msecs_callback
-[`http.Server#timeout`]: http.html#http_server_timeout
-[`http.Server`]: http.html#http_class_http_server
-[`https.Agent`]: #https_class_https_agent
-[`https.request()`]: #https_https_request_options_callback
-[`SSL_METHODS`]: https://www.openssl.org/docs/man1.0.2/ssl/ssl.html#DEALING-WITH-PROTOCOL-METHODS
-[`tls.connect()`]: tls.html#tls_tls_connect_options_callback
-[`tls.createServer()`]: tls.html#tls_tls_createserver_options_secureconnectionlistener
-[`url.parse()`]: url.html#url_url_parse_urlstring_parsequerystring_slashesdenotehost
+Example using a [`URL`][] as `options`:
+
+```js
+const { URL } = require('url');
+
+const options = new URL('https://abc:xyz@example.com');
+
+const req = https.request(options, (res) => {
+  // ...
+});
+```
+

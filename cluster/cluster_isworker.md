@@ -2,7 +2,7 @@
 added: v0.6.0
 -->
 
-* {Boolean}
+* {boolean}
 
-True if the process is not a master (it is the negation of `cluster.isMaster`).
+当进程不是主进程时，返回 true。（和`cluster.isMaster`刚好相反）
 

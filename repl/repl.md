@@ -1,9 +1,10 @@
 
-> Stability: 2 - Stable
+<!--introduced_in=v0.10.0-->
 
-The `repl` module provides a Read-Eval-Print-Loop (REPL) implementation that
-is available both as a standalone program or includible in other applications.
-It can be accessed using:
+> 稳定性: 2 - 稳定的
+
+`repl` 模块提供了一种“读取-求值-输出”循环（REPL）的实现，它可作为一个独立的程序或嵌入到其他应用中。
+可以通过以下方式使用它：
 
 ```js
 const repl = require('repl');
