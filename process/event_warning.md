@@ -15,9 +15,9 @@ added: v6.0.0
 
 ```js
 process.on('warning', (warning) => {
-  console.warn(warning.name);    // Print the warning name
-  console.warn(warning.message); // Print the warning message
-  console.warn(warning.stack);   // Print the stack trace
+  console.warn(warning.name);    // 打印告警名称
+  console.warn(warning.message); // 打印告警信息
+  console.warn(warning.stack);   // 打印堆栈信息
 });
 ```
 
@@ -52,6 +52,6 @@ $ node --no-warnings
 
 使用`--trace-deprecation`命令行选项标志，会使得custom deprecation warning打印到`stderr`，包括其堆栈信息。
 
-使用`--trace-deprecation`命令行选项标志，会阻止报告所有的custom deprecation warning。
+使用`--no-deprecation`命令行选项标志，会阻止报告所有的custom deprecation warning。
 
 `*-deprecation` 命令行选项标志，只会影响使用名字为`DeprecationWarning`的告警。

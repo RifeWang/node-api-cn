@@ -2,7 +2,7 @@
 added: v8.0.0
 -->
 
-* `err` {Error} An error.
-* `callback` {Function} A callback function that takes an optional error
-  argument which is invoked when the readable is destroyed.
+* `err` {Error} 错误。
+* `callback` {Function} 回调函数，第一个参数为`err`参数。
 
+`_destroy()`需通过[`readable.destroy()`][readable-destroy]方法调用。它可以被子类覆盖，但不能直接调用。

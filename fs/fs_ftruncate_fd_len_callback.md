@@ -10,6 +10,7 @@ changes:
 * `fd` {integer}
 * `len` {integer} 默认 = `0`
 * `callback` {Function}
+  * `err` {Error}
 
 异步的 ftruncate(2)。
 完成回调只有一个可能的异常参数。
@@ -36,7 +37,7 @@ fs.ftruncate(fd, 4, (err) => {
 如果前面的文件小于 `len` 个字节，则扩展文件，且扩展的部分用空字节（'\0'）填充。例子：
 
 ```js
-console.log(fs.readFileSync('temp.txt', 'utf-8'));
+console.log(fs.readFileSync('temp.txt', 'utf8'));
 // 输出: Node.js
 
 // 获取要截断的文件的文件描述符

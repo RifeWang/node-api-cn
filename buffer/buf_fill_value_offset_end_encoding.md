@@ -6,12 +6,11 @@ changes:
     description: The `encoding` parameter is supported now.
 -->
 
-* `value` {string|Buffer|integer} 用来填充 `buf` 的值
-* `offset` {integer} 开始填充 `buf` 的位置。**默认:** `0`
-* `end` {integer} 结束填充 `buf` 的位置（不包含）。**默认:** [`buf.length`]
-* `encoding` {string} 如果 `value` 是一个字符串，则这是它的字符编码。
-  **默认:** `'utf8'`
-* 返回: {Buffer} `buf` 的引用
+* `value` {string|Buffer|integer} 用来填充 `buf` 的值。
+* `offset` {integer} 开始填充 `buf` 前要跳过的字节数。**默认:** `0`。
+* `end` {integer} 结束填充 `buf` 的位置（不包含）。**默认:** [`buf.length`]。
+* `encoding` {string} 如果 `value` 是一个字符串，则这是它的字符编码。**默认:** `'utf8'`。
+* 返回: {Buffer} `buf` 的引用。
 
 如果未指定 `offset` 和 `end`，则填充整个 `buf`。
 这个简化使得一个 `Buffer` 的创建与填充可以在一行内完成。
@@ -36,3 +35,15 @@ console.log(b.toString());
 console.log(Buffer.allocUnsafe(3).fill('\u0222'));
 ```
 
+If `value` contains invalid characters, it is truncated; if no valid
+fill data remains, no filling is performed:
+
+```js
+const buf = Buffer.allocUnsafe(5);
+// Prints: <Buffer 61 61 61 61 61>
+console.log(buf.fill('a'));
+// Prints: <Buffer aa aa aa aa aa>
+console.log(buf.fill('aazz', 'hex'));
+// Prints: <Buffer aa aa aa aa aa>
+console.log(buf.fill('zz', 'hex'));
+```

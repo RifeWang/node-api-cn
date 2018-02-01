@@ -1,4 +1,3 @@
-[`Error`]: errors.html#errors_class_error
 [`Error.captureStackTrace`]: errors.html#errors_error_capturestacktrace_targetobject_constructoropt
 [`Map`]: https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Map
 [`Object.is()`]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
@@ -28,3 +27,4 @@
 [原型]: https://tc39.github.io/ecma262/#sec-ordinary-object-internal-methods-and-internal-slots
 [类型标签]: https://tc39.github.io/ecma262/#sec-object.prototype.tostring
 [MDN的等式比较指南]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness
+[对象封装器]: https://developer.mozilla.org/en-US/docs/Glossary/Primitive#Primitive_wrapper_objects_in_JavaScript

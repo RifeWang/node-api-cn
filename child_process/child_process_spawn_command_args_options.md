@@ -1,6 +1,9 @@
 <!-- YAML
 added: v0.1.90
 changes:
+  - version: v8.8.0
+    pr-url: https://github.com/nodejs/node/pull/15380
+    description: The `windowsHide` option is supported now.
   - version: v6.4.0
     pr-url: https://github.com/nodejs/node/pull/7696
     description: The `argv0` option is supported now.
@@ -9,11 +12,11 @@ changes:
     description: The `shell` option is supported now.
 -->
 
-* `command` {string} 要运行的命令
-* `args` {Array} 字符串参数列表
+* `command` {string} 要运行的命令。
+* `args` {Array} 字符串参数列表。
 * `options` {Object}
-  * `cwd` {string} 子进程的当前工作目录
-  * `env` {Object} 环境变量键值对
+  * `cwd` {string} 子进程的当前工作目录。
+  * `env` {Object} 环境变量键值对。
   * `argv0` {string} 显式地设置要发给子进程的 `argv[0]` 的值。
     如果未指定，则设为 `command`。
   * `stdio` {Array|string} 子进程的 stdio 配置。
@@ -27,6 +30,11 @@ changes:
     一个不同的 shell 可以被指定为字符串。
     See [Shell Requirements][] and [Default Windows Shell][].
     默认为 `false`（没有 shell）。
+  * `windowsVerbatimArguments` {boolean} No quoting or escaping of arguments is
+    done on Windows. Ignored on Unix. This is set to `true` automatically
+    when `shell` is specified. **Default:** `false`.
+  * `windowsHide` {boolean} Hide the subprocess console window that would
+    normally be created on Windows systems. **Default:** `false`.
 * 返回: {ChildProcess}
 
 `child_process.spawn()` 方法使用给定的 `command` 和 `args` 中的命令行参数来衍生一个新进程。

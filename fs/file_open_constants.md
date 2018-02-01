@@ -55,6 +55,10 @@
     <td>该标志表明文件打开用于同步 I/O。</td>
   </tr>
   <tr>
+    <td><code>O_DSYNC</code></td>
+    <td>该标志标明文件为同步I/O打开，写入操作会等待数据完整性</td>
+  </tr>
+  <tr>
     <td><code>O_SYMLINK</code></td>
     <td>该标志表明打开符号链接自身，而不是它指向的资源。</td>
   </tr>

@@ -1,8 +1,8 @@
 
-为connections启动一个 server 监听. 一个 `net.Server` 可以是一个 TCP 或者 
+为 connections 启动一个 server 监听. 一个 `net.Server` 可以是一个 TCP 或者 
 一个 [IPC][] server，这取决于它监听什么。
 
-Possible signatures:
+可能的参数:
 
 * [`server.listen(handle[, backlog][, callback])`][`server.listen(handle)`]
 * [`server.listen(options[, callback])`][`server.listen(options)`]
@@ -21,12 +21,11 @@ Possible signatures:
 
 *说明*：
 
-* 所有的[`net.Socket`][] 被设置为 `So_REUSEADDR` (详见 [socket(7)][])
+* 所有的 [`net.Socket`][] 都被设置为 `SO_REUSEADDR` (详见 [socket(7)][])
 
-* `server.listen()` 方法可能会被调用多次. 通过先前提供的选项, 每个 subsequent call 将会 *re-open* 该 server
+* `server.listen()` 方法可能会被调用多次。每个后续的调用都将使用其提供的选项重新打开服务器。
 
-监听时，其中一个最常引发的错误是 `EADDRINUSE`。
-这发生在当另一个 server 已经监听了该请求中的 `port` / `path` / `handle`。
+监听时，其中一个最常见的错误是 `EADDRINUSE`。这是因为另一个 server 已经监听了该请求中的 `port` / `path` / `handle`。
 处理这种情况的一种方法是在一定时间后重试：
 
 ```js

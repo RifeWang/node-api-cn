@@ -1,23 +1,29 @@
 <!-- YAML
 added: v0.1.90
+changes:
+  - version: v8.8.0
+    pr-url: https://github.com/nodejs/node/pull/15380
+    description: The `windowsHide` option is supported now.
 -->
 
-* `command` {string} 要运行的命令，用空格分隔参数
+* `command` {string} 要运行的命令，用空格分隔参数。
 * `options` {Object}
-  * `cwd` {string} 子进程的当前工作目录
-  * `env` {Object} 环境变量键值对
-  * `encoding` {string} （默认: `'utf8'`）
-  * `shell` {string} 用于执行命令的 shell
-    （默认：在 UNIX 上为 `'/bin/sh'`，在 Windows 上为 `process.env.ComSpec`。
-    See [Shell Requirements][] and [Default Windows Shell][].）
-  * `timeout` {number} （默认: `0`）
+  * `cwd` {string} 子进程的当前工作目录。
+  * `env` {Object} 环境变量键值对。
+  * `encoding` {string} 默认为 `'utf8'`。
+  * `shell` {string} 用于执行命令的 shell。
+    在 UNIX 上默认为 `'/bin/sh'`，在 Windows 上默认为 `process.env.ComSpec`。
+    详见 [Shell Requirements][] 与 [Default Windows Shell][]。
+  * `timeout` {number} 默认为 `0`。
   * [`maxBuffer`] {number} stdout 或 stderr 允许的最大字节数。
     默认为 `200*1024`。
     如果超过限制，则子进程会被终止。
-    查看警告： [`maxBuffer` and Unicode][].
-  * `killSignal` {string|integer} （默认: `'SIGTERM'`）
+    查看警告： [`maxBuffer` and Unicode][]。
+  * `killSignal` {string|integer} 默认为 `'SIGTERM'`。
   * `uid` {number} 设置该进程的用户标识。（详见 setuid(2)）
   * `gid` {number} 设置该进程的组标识。（详见 setgid(2)）
+  * `windowsHide` {boolean} Hide the subprocess console window that would
+    normally be created on Windows systems. **Default:** `false`.
 * `callback` {Function} 当进程终止时调用，并带上输出。
   * `error` {Error}
   * `stdout` {string|Buffer}

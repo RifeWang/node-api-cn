@@ -1,10 +1,10 @@
 
-* Returns {AsyncHook} A reference to `asyncHook`.
+* Returns: {AsyncHook} A reference to `asyncHook`.
 
 Enable the callbacks for a given `AsyncHook` instance. If no callbacks are
 provided enabling is a noop.
 
-The `AsyncHook` instance is by default disabled. If the `AsyncHook` instance
+The `AsyncHook` instance is disabled by default. If the `AsyncHook` instance
 should be enabled immediately after creation, the following pattern can be used.
 
 ```js

@@ -4,7 +4,4 @@ added: v0.9.1
 
 * Returns: {net.Server}
 
-Opposite of `unref`, calling `ref` on a previously `unref`d server will *not*
-let the program exit if it's the only server left (the default behavior). If
-the server is `ref`d calling `ref` again will have no effect.
-
+与 `unref` 相反，在一个已经调用 `unref` 的 server 中调用 `ref`，如果 server 是仅存的 server，则程序不会退出（默认）。对一个已经调用 `ref` 的 server 再次调用 `ref` 将不会再有效果。

@@ -1,19 +1,32 @@
 <!-- YAML
 added: v8.4.0
+changes:
+  - version: v8.9.3
+    pr-url: https://github.com/nodejs/node/pull/17105
+    description: Added the `maxOutstandingPings` option with a default limit of
+                 10.
+  - version: v8.9.3
+    pr-url: https://github.com/nodejs/node/pull/16676
+    description: Added the `maxHeaderListPairs` option with a default limit of
+                 128 header pairs.
 -->
 
 * `options` {Object}
   * `allowHTTP1` {boolean} Incoming client connections that do not support
-    HTTP/2 will be downgraded to HTTP/1.x when set to `true`. The default value
-    is `false`. See the [`'unknownProtocol'`][] event. See [ALPN negotiation][].
+    HTTP/2 will be downgraded to HTTP/1.x when set to `true`. **Default:**
+    `false`. See the [`'unknownProtocol'`][] event. See [ALPN negotiation][].
   * `maxDeflateDynamicTableSize` {number} Sets the maximum dynamic table size
-    for deflating header fields. Defaults to 4Kib.
+    for deflating header fields. **Default:** `4Kib`
+  * `maxHeaderListPairs` {number} Sets the maximum number of header entries.
+    **Default:** `128`. The minimum value is `4`.
+  * `maxOutstandingPings` {number} Sets the maximum number of outstanding,
+    unacknowledged pings. The default is `10`.
   * `maxSendHeaderBlockLength` {number} Sets the maximum allowed size for a
     serialized, compressed block of headers. Attempts to send headers that
     exceed this limit will result in a `'frameError'` event being emitted
     and the stream being closed and destroyed.
   * `paddingStrategy` {number} Identifies the strategy used for determining the
-     amount of padding to use for HEADERS and DATA frames. Defaults to
+     amount of padding to use for HEADERS and DATA frames. **Default:**
      `http2.constants.PADDING_STRATEGY_NONE`. Value may be one of:
      * `http2.constants.PADDING_STRATEGY_NONE` - Specifies that no padding is
        to be applied.
@@ -26,7 +39,7 @@ added: v8.4.0
   * `peerMaxConcurrentStreams` {number} Sets the maximum number of concurrent
     streams for the remote peer as if a SETTINGS frame had been received. Will
     be overridden if the remote peer sets its own value for
-    `maxConcurrentStreams`. Defaults to 100.
+    `maxConcurrentStreams`. **Default:** `100`
   * `selectPadding` {Function} When `options.paddingStrategy` is equal to
     `http2.constants.PADDING_STRATEGY_CALLBACK`, provides the callback function
     used to determine the padding. See [Using options.selectPadding][].

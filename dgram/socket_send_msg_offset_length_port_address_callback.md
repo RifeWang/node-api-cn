@@ -17,12 +17,12 @@ changes:
                  and `length` parameters are optional now.
 -->
 
-* `msg` {Buffer|Uint8Array|string|array} 要发送的消息
-* `offset` {number} 整数。可选。指定消息的开头在 buffer 中的偏移量。
-* `length` {number} 整数。可选。消息的字节数。
+* `msg` {Buffer|Uint8Array|string|Array} 要发送的消息。
+* `offset` {number} 整数。指定消息的开头在 buffer 中的偏移量。
+* `length` {number} 整数。消息的字节数。
 * `port` {number} 整数。目标端口。
-* `address` {string} 目标主机名或 IP 地址。可选的。
-* `callback` {Function} 当消息被发送时会被调用。可选的。
+* `address` {string} 目标主机名或 IP 地址。
+* `callback` {Function} 当消息被发送时会被调用。
 
 在 socket 上发送一个数据包。目标`port`和`address`须被指定。
 
@@ -62,9 +62,7 @@ client.send([buf1, buf2], 41234, (err) => {
 ```
 
 发送多个 buffer 的速度取决于应用和操作系统。
-It is important to run benchmarks to
-determine the optimal strategy on a case-by-case basis. Generally speaking,
-however, sending multiple buffers is faster.
+逐案运行基准来确定最佳策略是很重要的。但是一般来说，发送多个 buffer 速度更快。
 
 **关于 UDP 包大小的注意事项**
 

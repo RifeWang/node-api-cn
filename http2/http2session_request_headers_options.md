@@ -10,7 +10,7 @@ added: v8.4.0
   * `exclusive` {boolean} When `true` and `parent` identifies a parent Stream,
     the created stream is made the sole direct dependency of the parent, with
     all other existing dependents made a dependent of the newly created stream.
-    Defaults to `false`.
+    **Default:** `false`
   * `parent` {number} Specifies the numeric identifier of a stream the newly
     created stream is dependent on.
   * `weight` {number} Specifies the relative dependency of a stream in relation
@@ -38,7 +38,7 @@ const {
 
 const req = clientSession.request({ [HTTP2_HEADER_PATH]: '/' });
 req.on('response', (headers) => {
-  console.log(HTTP2_HEADER_STATUS);
+  console.log(headers[HTTP2_HEADER_STATUS]);
   req.on('data', (chunk) => { /** .. **/ });
   req.on('end', () => { /** .. **/ });
 });

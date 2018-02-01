@@ -6,22 +6,17 @@ changes:
     description: The `chunk` argument can now be a `Uint8Array` instance.
 -->
 
-* `chunk` {Buffer|Uint8Array|string|any} Chunk of data to unshift onto the
-  read queue. For streams not operating in object mode, `chunk` must be a
-  string, `Buffer` or `Uint8Array`. For object mode streams, `chunk` may be
-  any JavaScript value other than `null`.
+* `chunk` {Buffer|Uint8Array|string|any} 数据块移动到可读队列底部。对于不以对象模式运行的流，`chunk` 必须是字符串， `Buffer` 或者 `Uint8Array`。对于对象流， `chunk` 任何非`null`的值。
 
-The `readable.unshift()` method pushes a chunk of data back into the internal
-buffer. This is useful in certain situations where a stream is being consumed by
-code that needs to "un-consume" some amount of data that it has optimistically
-pulled out of the source, so that the data can be passed on to some other party.
+`readable.unshift()` 方法会把一块数据压回到`Buffer`内部。
+这在如下特定情形下有用：
+代码正在消费一个数据流，已经"乐观地"拉取了数据。
+又需要"反悔-消费"一些数据，以便这些数据可以传给其他人用。
 
-*Note*: The `stream.unshift(chunk)` method cannot be called after the
-[`'end'`][] event has been emitted or a runtime error will be thrown.
+*注意*: [`'end'`][] 事件已经触发或者运行时错误抛出后，`stream.unshift(chunk)` 方法不能被调用。
 
-Developers using `stream.unshift()` often should consider switching to
-use of a [Transform][] stream instead. See the [API for Stream Implementers][]
-section for more information.
+使用 `stream.unshift()` 的开发者一般需要换一下思路，考虑用一个[Transform][] 流替代. 
+更多信息请查看[API for Stream Implementers][]部分。
 
 ```js
 // Pull off a header delimited by \n\n
@@ -59,12 +54,5 @@ function parseHeader(stream, callback) {
 }
 ```
 
-*Note*: Unlike [`stream.push(chunk)`][stream-push], `stream.unshift(chunk)`
-will not end the reading process by resetting the internal reading state of the
-stream. This can cause unexpected results if `readable.unshift()` is called
-during a read (i.e. from within a [`stream._read()`][stream-_read]
-implementation on a custom stream). Following the call to `readable.unshift()`
-with an immediate [`stream.push('')`][stream-push] will reset the reading state
-appropriately, however it is best to simply avoid calling `readable.unshift()`
-while in the process of performing a read.
+*注意*： 不像 [`stream.push(chunk)`][stream-push]，`stream.unshift(chunk)`在重置流的内部读取状态时是不会结束读取过程。 如果在读取过程中调用 `readable.unshift()` 则会导致异常 (例如：即来自自定义流上的 [`stream._read()`][stream-_read]内部方法上的实现)。 应该在调用 `readable.unshift()`方法之后适当调用 [`stream.push('')`][stream-push] 来重置读取状态，执行读取的过程中最好避免调用 `readable.unshift()`方法。
 

@@ -5,37 +5,28 @@ changes:
     description: The `chunk` argument can now be a `Uint8Array` instance.
 -->
 
-* `chunk` {Buffer|Uint8Array|string|null|any} Chunk of data to push into the
-  read queue. For streams not operating in object mode, `chunk` must be a
-  string, `Buffer` or `Uint8Array`. For object mode streams, `chunk` may be
-  any JavaScript value.
-* `encoding` {string} Encoding of string chunks.  Must be a valid
-  Buffer encoding, such as `'utf8'` or `'ascii'`
-* Returns {boolean} `true` if additional chunks of data may continued to be
-  pushed; `false` otherwise.
+* `chunk` {Buffer|Uint8Array|string|null|any} 压入读队列的数据块。
+  对于没有处在object mode的流来说，`chunk`必须是一个字符串，`Buffer` 或`Uint8Array`；
+  对object mode 的流来说，`chunk`可以使任何JavaScript值。
+* `encoding` {string} 字符串数据块的编码方式.  必须是可用的Buffer编码方式，例如`'utf8'` 或 `'ascii'`。
+* 返回 {boolean} 如果多余的数据块可能会继续压入，那么返回`true`; 否则返回 `false`.
 
-When `chunk` is a `Buffer`, `Uint8Array` or `string`, the `chunk` of data will
-be added to the internal queue for users of the stream to consume.
-Passing `chunk` as `null` signals the end of the stream (EOF), after which no
-more data can be written.
+当`chunk`是一个`Buffer`, `Uint8Array`或者`string`时，
+这个数据块(`chunk`)会被添加到内部队列供使用者消费。
+在没有数据可写入后，给`chunk`传了`null`发出流结束(EOF)的信号。
 
-When the Readable is operating in paused mode, the data added with
-`readable.push()` can be read out by calling the
-[`readable.read()`][stream-read] method when the [`'readable'`][] event is
-emitted.
+当可读流处在传输模式下，`'data'`事件触发时，可以通过
+调用[`readable.read()`][stream-read] 方法读出来数据，这数据是用`readable.push()`添加的。
 
-When the Readable is operating in flowing mode, the data added with
-`readable.push()` will be delivered by emitting a `'data'` event.
+`readable.push()`方法被设计得尽可能的灵活。
+比如，当封装一个有'暂停/恢复'机制和带数据回调的底层source的时候，
+那么这个底层的source可以被常规的可读流实例封装。就像下面的例子一样。
 
-The `readable.push()` method is designed to be as flexible as possible. For
-example, when wrapping a lower-level source that provides some form of
-pause/resume mechanism, and a data callback, the low-level source can be wrapped
-by the custom Readable instance as illustrated in the following example:
 
 ```js
-// source is an object with readStop() and readStart() methods,
-// and an `ondata` member that gets called when it has data, and
-// an `onend` member that gets called when the data is over.
+// source 是一个有readStop()和 readStart()方法的对象。
+// 有数据就调`ondata`成员函数；
+// 数据结束就调`onend`成员函数。
 
 class SourceWrapper extends Readable {
   constructor(options) {
@@ -62,6 +53,6 @@ class SourceWrapper extends Readable {
   }
 }
 ```
-*Note*: The `readable.push()` method is intended be called only by Readable
-Implementers, and only from within the `readable._read()` method.
+*注意*: `readable.push()`方法是为了让可读流实现者调用的，
+而且只来自`readable._read()`方法内部。
 

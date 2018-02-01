@@ -12,6 +12,8 @@ changes:
   * `persistent` {boolean} **Default:** `true`
   * `interval` {integer} **Default:** `5007`
 * `listener` {Function}
+  * `current` {fs.Stats}
+  * `previous` {fs.Stats}
 
 监视 `filename` 的变化。
 回调 `listener` 会在每次访问文件时被调用。
@@ -31,7 +33,6 @@ fs.watchFile('message.text', (curr, prev) => {
 });
 ```
 
-These stat objects are instances of `fs.Stat`.
 这里的状态对象是 `fs.Stat` 实例。
 
 如果你想在文件被修改而不只是访问时得到通知，则需要比较 `curr.mtime` 和 `prev.mtime`。
@@ -44,3 +45,8 @@ These stat objects are instances of `fs.Stat`.
 注意：[`fs.watch()`] 比 `fs.watchFile` 和 `fs.unwatchFile` 更高效。
 可能的话，应该使用 `fs.watch` 而不是 `fs.watchFile` 和 `fs.unwatchFile`。
 
+*注意:* 当 `fs.watchFile()` 所监听的文件消失并重新出现时，第二个回调函数中返回的 previousstat (文件重新出现)将与第一个回调函数的 previousstat (消失)相同。
+
+这种情况会发生在:
+- 该文件被删除，然后又恢复
+- 文件重命名两次 - 第二次重命名与其原名称相同
