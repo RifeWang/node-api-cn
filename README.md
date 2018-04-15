@@ -4,7 +4,7 @@
 
 - 进入 API 模块，如 assert（[http://nodejs.cn/api/assert.html](http://nodejs.cn/api/assert.html)）。
 - 每个小标题下有【查看英文md文件】与【编辑中文md文件】2个入口。
-- 进入【编辑中文md文件】可对页面进行修改并创建 pull request，[模块管理员]审核通过后会自动构建到预览版页面，如   assert（[http://nodejs.cn/api/dev/assert.html](http://nodejs.cn/api/dev/assert.html)，URL 比正式版多了/dev/），构建过程大概耗时20秒钟。
+- 进入【编辑中文md文件】可对页面进行修改并创建 pull request，[模块管理员]审核通过后会自动构建到预览版页面，如   assert（[http://nodejs.cn/api/dev/assert.html](http://nodejs.cn/api/dev/assert.html)，URL 比正式版多了/dev/），构建过程大概耗时20秒钟。
 - 进入【查看英文md文件】可查看原始的英文 markdown 文件，方便内容对比。
 - 每天会不定时从预览版同步到正式版。
 
