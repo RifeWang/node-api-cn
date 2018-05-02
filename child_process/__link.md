@@ -1,10 +1,8 @@
 [`'error'`]: #child_process_event_error
 [`'exit'`]: #child_process_event_exit
-[`'message'`]: #child_process_event_message
 [`ChildProcess`]: #child_process_child_process
 [`Error`]: errors.html#errors_class_error
 [`EventEmitter`]: events.html#events_class_eventemitter
-[`JSON.stringify` spec]: https://tc39.github.io/ecma262/#sec-json.stringify
 [`subprocess.connected`]: #child_process_subprocess_connected
 [`subprocess.disconnect()`]: #child_process_subprocess_disconnect
 [`subprocess.kill()`]: #child_process_subprocess_kill_signal
@@ -37,5 +35,9 @@
 
 [`child.on('message')`]: #child_process_event_message
 [`maxBuffer`]: #child_process_maxbuffer_and_unicode
+[`maxBuffer`与Unicode]: #child_process_maxbuffer_and_unicode
 [`options.stdio`]: #child_process_options_stdio
-[同步的方法]: #child_process_synchronous_process_creation
+[同步的函数]: #child_process_synchronous_process_creation
+[Windows默认的Shell]: #child_process_default_windows_shell
+[Shell的要求]: #child_process_shell_requirements
+[因shell而异]: https://en.wikipedia.org/wiki/List_of_command-line_interpreters
